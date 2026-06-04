@@ -626,7 +626,14 @@ jobs:
         RELEASEURLALTSTORE=$(curl -F "reqtype=fileupload" -F "fileToUpload=@${{ env.altpatchedspotify }}" https://catbox.moe/user/api.php)
         echo "AltStore Release Download URL: $RELEASEURLALTSTORE"
         echo "RELEASEURLALTSTORE=$RELEASEURLALTSTORE" >> $GITHUB_ENV
-   
+
+    - name: Get AltStore IPA size
+      run: |
+        ls -l Build_Components
+        FILE_SIZE=$(stat -f%z "${{ env.altpatchedspotify }}")
+        echo "FILE_SIZE=$FILE_SIZE"
+        echo "FILE_SIZE=$FILE_SIZE" >> $GITHUB_ENV
+
     - name: Extract and Prepare VirusTotal Links
       if: ${{ env.VT_ENABLED == 'true' }}
       run: |
