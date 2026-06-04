@@ -30,7 +30,6 @@ jobs:
       run: |
         echo "EEVEEVERSION=${{ github.event.inputs.EEVEEVERSION }}" >> $GITHUB_ENV
         echo "CHANGEVERSION=${{ github.event.inputs.CHANGEVERSION }}" >> $GITHUB_ENV
-        echo "SPOTURL=${{ github.event.inputs.SPOTURL }}" >> $GITHUB_ENV
         echo "VT_ENABLED=${{ secrets.VIRUSTOTALKEY != '' }}" >> $GITHUB_ENV
         echo "CATBOXHASH_ENABLED=${{ secrets.CATBOXHASH != '' }}" >> $GITHUB_ENV
         
@@ -94,8 +93,6 @@ jobs:
     - name: Download Spotify IPA
       run: |
         curl -L "https://github.com/Andybart128/SpotC-Plus-Plus/releases/download/v0.1/com.spotify.client_9.1.48_und3fined.ipa" -o "Build Components/Spotify.ipa"
-      env:
-        SPOTURL: ${{ github.event.inputs.SPOTURL }}
       
     - name: Upload Spotify IPA to VirusTotal
       if: ${{ env.VT_ENABLED == 'true' }}
