@@ -608,7 +608,7 @@ jobs:
     - name: Upload to Catbox (With Hash)
       if: ${{ env.CATBOXHASH_ENABLED == 'true' }}
       run: |
-        RELEASEURL=$(curl -F "reqtype=fileupload" -F "userhash=${{ secrets.CATBOXHASH }}" -F "fileToUpload=@${{ env.patchedspotify }}" https://catbox.moe/user/api.php)
+        RELEASEURL=$(curl -F "reqtype=fileupload" -F "userhash=${{ secrets.CATBOXHASH }}" -F "fileToUpload=@${{ env.altpatchedspotify }}" https://catbox.moe/user/api.php)
         echo "Standard Release Download URL: $RELEASEURL"
         echo "RELEASEURL=$RELEASEURL" >> $GITHUB_ENV
     
@@ -619,7 +619,7 @@ jobs:
     - name: Upload to Catbox (Without Hash)
       if: ${{ env.CATBOXHASH_ENABLED == 'false' }}
       run: |
-        RELEASEURL=$(curl -F "reqtype=fileupload" -F "fileToUpload=@${{ env.patchedspotify }}" https://catbox.moe/user/api.php)
+        RELEASEURL=$(curl -F "reqtype=fileupload" -F "fileToUpload=@${{ env.altpatchedspotify }}" https://catbox.moe/user/api.php)
         echo "Standard Release Download URL: $RELEASEURL"
         echo "RELEASEURL=$RELEASEURL" >> $GITHUB_ENV
     
