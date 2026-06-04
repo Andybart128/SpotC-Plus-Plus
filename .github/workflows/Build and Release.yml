@@ -113,6 +113,8 @@ jobs:
         codesign -d --entitlements :- Payload/Spotify.app \
           | plutil -convert json -o Entitlements.json -
 
+        cat Entitlements.json
+
         ls -l
 
     - name: Set Spotify path
