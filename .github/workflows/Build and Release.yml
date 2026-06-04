@@ -93,7 +93,14 @@ jobs:
     - name: Download Spotify IPA
       run: |
         curl -L "https://github.com/Andybart128/SpotC-Plus-Plus/releases/download/v0.1/com.spotify.client_9.1.48_und3fined.ipa" -o "Build_Components/Spotify.ipa"
-      
+        ls -l Build_Components
+ 
+    - name: Extract Spotify IPA
+      run: |
+        unzip -q Build_Components/Spotify.ipa -d Build_Components
+        echo "Contenu après extraction :"
+        ls -l Build_Components
+
     - name: Upload Spotify IPA to VirusTotal
       if: ${{ env.VT_ENABLED == 'true' }}
       uses: crazy-max/ghaction-virustotal@v4
