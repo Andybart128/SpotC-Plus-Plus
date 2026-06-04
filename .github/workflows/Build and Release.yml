@@ -3,9 +3,6 @@ name: Build and Release
 on:
   workflow_dispatch:
     inputs:
-      SPOTURL:
-        description: 'Direct URL to Spotify .ipa'
-        required: true
       CHANGEVERSION:
         description: 'SpotC++ Version Number'
         required: false
