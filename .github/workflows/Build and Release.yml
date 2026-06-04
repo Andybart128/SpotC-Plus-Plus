@@ -101,6 +101,9 @@ jobs:
         echo "Contenu après extraction :"
         ls -l Build_Components
 
+    - name: Set Spotify path
+      run: echo "spotifypath=Build_Components/Spotify.ipa" >> $GITHUB_ENV
+
     - name: Upload Spotify IPA to VirusTotal
       if: ${{ env.VT_ENABLED == 'true' }}
       uses: crazy-max/ghaction-virustotal@v4
