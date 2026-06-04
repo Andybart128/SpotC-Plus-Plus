@@ -107,7 +107,9 @@ jobs:
         cp Payload/Spotify.app/Info.plist Info.plist
         echo "VANILLASPOTIFYVERSION=$(/usr/libexec/PlistBuddy -c 'Print :SpotifyVersionShort' Info.plist)" >> $GITHUB_ENV
         echo "MIN_IOS_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' Info.plist)" >> $GITHUB_ENV
+        
         (echo "{"; find ./ -name "Info.plist" | while read file; do plutil -p "$file" 2>/dev/null | grep -E "NS.*Description" | sed -E 's/^\s*"([^"]+)".*"(.*)"$/"\1": "\2",/'; done | sed 's/,$//'; echo "}") > NSDescriptions.json
+        
         codesign -d --entitlements :- Payload/Spotify.app \
           | plutil -convert json -o Entitlements.json -
 
