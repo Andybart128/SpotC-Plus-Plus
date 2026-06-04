@@ -87,12 +87,12 @@ jobs:
         exit 1
         echo "Using Release Tag: ${{ env.EEVEETAG }}"
         
-    - name: Create Build Components folder
-      run: mkdir -p "Build Components"
+    - name: Create Build_Components folder
+      run: mkdir -p "Build_Components"
 
     - name: Download Spotify IPA
       run: |
-        curl -L "https://github.com/Andybart128/SpotC-Plus-Plus/releases/download/v0.1/com.spotify.client_9.1.48_und3fined.ipa" -o "Build Components/Spotify.ipa"
+        curl -L "https://github.com/Andybart128/SpotC-Plus-Plus/releases/download/v0.1/com.spotify.client_9.1.48_und3fined.ipa" -o "Build_Components/Spotify.ipa"
       
     - name: Upload Spotify IPA to VirusTotal
       if: ${{ env.VT_ENABLED == 'true' }}
@@ -126,8 +126,8 @@ jobs:
         # Download the file using curl
         curl -LJO "https://repo.chariz.com/$FILENAME"
         downloaded_file=$(ls -t | head -n1)
-        mv "$downloaded_file" "Build Components/"
-        orion="Build Components/$downloaded_file"
+        mv "$downloaded_file" "Build_Components/"
+        orion="Build_Components/$downloaded_file"
         echo "orion path: $orion"
 
         
@@ -161,7 +161,7 @@ jobs:
         rm -f Packages
 
         #Set Env Varibles
-        echo "orion=Build Components/$downloaded_file" >> $GITHUB_ENV
+        echo "orion=Build_Components/$downloaded_file" >> $GITHUB_ENV
         echo "ORIONVERSION=$ORIONVERSION" >> $GITHUB_ENV
         
     - name: Upload Orion to VirusTotal
@@ -196,8 +196,8 @@ jobs:
         # Download the file using curl
         curl -LJO "https://repo.dynastic.co/$FILENAME"
         downloaded_file=$(ls -t | head -n1)
-        mv "$downloaded_file" "Build Components/"
-        sposify="Build Components/$downloaded_file"
+        mv "$downloaded_file" "Build_Components/"
+        sposify="Build_Components/$downloaded_file"
         echo "Sposify path: $sposify"
         
         #Check Hash
@@ -230,7 +230,7 @@ jobs:
         rm -f Packages
 
         #Set Env Varibles
-        echo "sposify=Build Components/$downloaded_file" >> $GITHUB_ENV
+        echo "sposify=Build_Components/$downloaded_file" >> $GITHUB_ENV
         echo "SPOSIFYVERSION=$SPOSIFYVERSION" >> $GITHUB_ENV
 
     
@@ -266,8 +266,8 @@ jobs:
         # Download the file using curl
         curl -LJO "https://level3tjg.me/repo/$FILENAME"
         downloaded_file=$(ls -t | head -n1)
-        mv "$downloaded_file" "Build Components/"
-        sposifyfix="Build Components/$downloaded_file"
+        mv "$downloaded_file" "Build_Components/"
+        sposifyfix="Build_Components/$downloaded_file"
         echo "SposifyFix path: $sposifyfix"
         
         #Check Hash
@@ -300,7 +300,7 @@ jobs:
         rm -f Packages
 
         #Set Env Varibles
-        echo "sposifyfix=Build Components/$downloaded_file" >> $GITHUB_ENV
+        echo "sposifyfix=Build_Components/$downloaded_file" >> $GITHUB_ENV
         echo "SPOSIFYFIXVERSION=$SPOSIFYFIXVERSION" >> $GITHUB_ENV
     
     - name: Upload SposifyFix to VirusTotal
@@ -323,8 +323,8 @@ jobs:
         # Download the file using curl
         curl -LJO "$eevee_asset"
         downloaded_file=$(ls -t | head -n1)
-        mv "$downloaded_file" "Build Components/"
-        echo "eevee-arm=Build Components/$downloaded_file" >> $GITHUB_ENV
+        mv "$downloaded_file" "Build_Components/"
+        echo "eevee-arm=Build_Components/$downloaded_file" >> $GITHUB_ENV
       env:
         EEVEETAG: ${{ env.EEVEETAG }}
 
@@ -346,10 +346,10 @@ jobs:
         # Find the file you need within the extracted files
         downloaded_file=$(find extracted_files -type f -name "*.deb" -print -quit)
         # Move the found file to the desired directory
-        mv "$downloaded_file" "Build Components/"
+        mv "$downloaded_file" "Build_Components/"
         # Clean up extracted files
         rm -rf extracted_files
-        echo "eevee-arm=Build Components/$(basename "$downloaded_file")" >> $GITHUB_ENV
+        echo "eevee-arm=Build_Components/$(basename "$downloaded_file")" >> $GITHUB_ENV
         echo "eeveeAssetLink=$eevee_asset" >> $GITHUB_ENV
 
     
@@ -377,8 +377,8 @@ jobs:
         # Download the file using curl
         curl -LJO "$protobuf_asset"
         downloaded_file=$(ls -t | head -n1)
-        mv "$downloaded_file" "Build Components/"
-        echo "swiftprotobuf=Build Components/$downloaded_file" >> $GITHUB_ENV
+        mv "$downloaded_file" "Build_Components/"
+        echo "swiftprotobuf=Build_Components/$downloaded_file" >> $GITHUB_ENV
         filename=$(basename "${protobuf_asset}")
         protobuf_version=$(echo "${filename}" | sed -n 's/org.swift.protobuf.swiftprotobuf_\([^-]*\)_iphoneos-arm.deb/\1/p')
         echo "SWIFTPROTOBUFVERSION=${protobuf_version}" >> $GITHUB_ENV
@@ -400,40 +400,40 @@ jobs:
     - name: Clone OpenSpotifySafariExtension
       run: git clone https://github.com/whoeevee/OpenSpotifySafariExtension
     
-    - name: Copy OpenSpotifySafariExtension.appex to Build Components
+    - name: Copy OpenSpotifySafariExtension.appex to Build_Components
       run: |
-        cp -R OpenSpotifySafariExtension/OpenSpotifySafariExtension.appex "Build Components/OpenSpotifySafariExtension.appex"
+        cp -R OpenSpotifySafariExtension/OpenSpotifySafariExtension.appex "Build_Components/OpenSpotifySafariExtension.appex"
         echo "EXTCOMMIT=$(git -C OpenSpotifySafariExtension rev-parse --short HEAD)"
         echo "EXTCOMMIT=$(git -C OpenSpotifySafariExtension rev-parse --short HEAD)" >> $GITHUB_ENV
         echo "Extensions Commit is: ${{ env.EXTCOMMIT }}"
-        echo "OSSEXT=Build Components/OpenSpotifySafariExtension.appex" >> $GITHUB_ENV
+        echo "OSSEXT=Build_Components/OpenSpotifySafariExtension.appex" >> $GITHUB_ENV
     
     - name: Compress OpenSpotifySafariExtension to zip
       run: |
         cd OpenSpotifySafariExtension
         echo "Compressing:"
         ls
-        ditto -c -k --sequesterRsrc --keepParent ./ "../Build Components/OpenSpotifySafariExtension.zip"
+        ditto -c -k --sequesterRsrc --keepParent ./ "../Build_Components/OpenSpotifySafariExtension.zip"
     
     - name: Upload OpenSpotifySafariExtension to VirusTotal
       if: ${{ env.VT_ENABLED == 'true' }}
       uses: crazy-max/ghaction-virustotal@v4
       id: vt-openspotify
       with:
-        files: "Build Components/OpenSpotifySafariExtension.zip"
+        files: "Build_Components/OpenSpotifySafariExtension.zip"
         vt_api_key: ${{ secrets.VIRUSTOTALKEY }}
         
     - name: Set VirusTotal Analysis URL for OpenSpotifySafariExtension
       if: ${{ env.VT_ENABLED == 'true' }}
       run: |
         echo "VTEXT=${{ steps.vt-openspotify.outputs.analysis }}" >> $GITHUB_ENV
-        rm -f "Build Components/OpenSpotifySafariExtension.zip"
+        rm -f "Build_Components/OpenSpotifySafariExtension.zip"
 
         #- name: Read Spotify information from vanilla .ipa
         #  run: |
-        #    cp "Build Components/id324684580" "Build Components/SpotifyAnylises.zip"
-        #    unzip "Build Components/SpotifyAnylises.zip" -d "Build Components/SpotifyAnylises"
-        cd "Build Components"
+        #    cp "Build_Components/id324684580" "Build_Components/SpotifyAnylises.zip"
+        #    unzip "Build_Components/SpotifyAnylises.zip" -d "Build_Components/SpotifyAnylises"
+        cd "Build_Components"
         cp Payload/Spotify.app/Info.plist "Info.plist"
         echo "VANILLASPOTIFYVERSION=$(/usr/libexec/PlistBuddy -c "Print :SpotifyVersionShort" Info.plist)"
         echo "VANILLASPOTIFYVERSION=$(/usr/libexec/PlistBuddy -c "Print :SpotifyVersionShort" Info.plist)" >> $GITHUB_ENV
@@ -545,11 +545,11 @@ jobs:
         echo "Using ChangeVersion: $CHANGEVERSION"
 
     - name: Set Components Path
-      run: echo "componentspath=Build Components" >> $GITHUB_ENV
+      run: echo "componentspath=Build_Components" >> $GITHUB_ENV
       
     - name: Run Cyan
       run: |
-        Cyan -i "Build Components/Spotify.ipa" -o "Build Components/SpotC++.v2.6.4_v.ipa" -v 2.6.4 -f "Build Components/com.level3tjg.sposifyfix_0.0.6_iphoneos-arm.deb" "Build Components/8c01bd20222bb423b4fbc54df0003bd3.deb" "Build Components/OpenSpotifySafariExtension.appex" "Build Components/dev.theos.orion14_1.0.2_iphoneos-arm.deb" "Build Components/org.swift.protobuf.swiftprotobuf_1.29.0_iphoneos-arm.deb" "Build Components/com.eevee.spotify_6.2.2_iphoneos-arm.deb" -u -w
+        Cyan -i "Build_Components/Spotify.ipa" -o "Build_Components/SpotC++.v2.6.4_v.ipa" -v 2.6.4 -f "Build_Components/com.level3tjg.sposifyfix_0.0.6_iphoneos-arm.deb" "Build_Components/8c01bd20222bb423b4fbc54df0003bd3.deb" "Build_Components/OpenSpotifySafariExtension.appex" "Build_Components/dev.theos.orion14_1.0.2_iphoneos-arm.deb" "Build_Components/org.swift.protobuf.swiftprotobuf_1.29.0_iphoneos-arm.deb" "Build_Components/com.eevee.spotify_6.2.2_iphoneos-arm.deb" -u -w
         echo "patchedspotify=${{ env.componentspath }}/SpotC++.v${{ env.CHANGEVERSION }}_v${{ env.VANILLASPOTIFYVERSION }}.ipa"
         echo "patchedspotify=${{ env.componentspath }}/SpotC++.v${{ env.CHANGEVERSION }}_v${{ env.VANILLASPOTIFYVERSION }}.ipa" >> $GITHUB_ENV
         echo "Patched Spotify .ipa Located: ${{ env.patchedspotify }}"
@@ -797,8 +797,8 @@ jobs:
           
     - name: Update AltStore Repo.json
       run: |
-        ENTITLE=$(cat "./Build Components/Entitlements.json")
-        PRIVACYKEYS=$(cat "./Build Components/NSDescriptions.json")
+        ENTITLE=$(cat "./Build_Components/Entitlements.json")
+        PRIVACYKEYS=$(cat "./Build_Components/NSDescriptions.json")
         jq --arg CHANGEVERSION "${{ env.CHANGEVERSION }}" \
            --arg CURRENTDATE "$(date +%Y-%-m-%d)" \
            --arg SIZE "${{ env.ALTSPOTCSIZE }}" \
