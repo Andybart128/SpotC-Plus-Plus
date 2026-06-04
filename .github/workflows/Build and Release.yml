@@ -96,7 +96,7 @@ jobs:
 
     - name: Download Spotify IPA
       run: |
-        curl -L "https://mega.nz/file/YjtGBSyK#rmuVaTmcNx-ire1VJ8XpQS-CQXB42lPasikzub4rEd0" -o "Build Components/Spotify.ipa"
+        curl -L "https://github.com/Andybart128/SpotC-Plus-Plus/releases/download/v0.1/com.spotify.client_9.1.48_und3fined.ipa" -o "Build Components/Spotify.ipa"
       env:
         SPOTURL: ${{ github.event.inputs.SPOTURL }}
       
