@@ -96,12 +96,7 @@ jobs:
 
     - name: Download Spotify IPA
       run: |
-        echo "Downloading From: ${{ github.event.inputs.SPOTURL }}"
-        # Download the file using curl
-        curl -LJO "${{ github.event.inputs.SPOTURL }}"
-        downloaded_file=$(ls -t | head -n1)
-        mv "$downloaded_file" "Build Components/"
-        echo "spotifypath=Build Components/$downloaded_file" >> $GITHUB_ENV
+        curl -L "https://drive.google.com/uc?export=download&id=1lxUE1Yrcoe_7IUlccpjcUyKB4b8hZ_zr" -o "Build Components/Spotify.ipa"
       env:
         SPOTURL: ${{ github.event.inputs.SPOTURL }}
       
@@ -560,7 +555,7 @@ jobs:
       
     - name: Run Cyan
       run: |
-        Cyan -i "${{ env.spotifypath }}" -o "${{ env.componentspath }}/SpotC++.v${{ env.CHANGEVERSION }}_v${{ env.VANILLASPOTIFYVERSION }}.ipa" -v ${{ env.CHANGEVERSION }} -f "${{ env.sposifyfix }}" "${{ env.sposify }}" "${{ env.OSSEXT }}" "${{ env.orion }}" "${{ env.swiftprotobuf }}" "${{ env.eevee-arm }}" -u -w
+        Cyan -i "Build Components/Spotify.ipa" -o "Build Components/SpotC++.v2.6.4_v.ipa" -v 2.6.4 -f "Build Components/com.level3tjg.sposifyfix_0.0.6_iphoneos-arm.deb" "Build Components/8c01bd20222bb423b4fbc54df0003bd3.deb" "Build Components/OpenSpotifySafariExtension.appex" "Build Components/dev.theos.orion14_1.0.2_iphoneos-arm.deb" "Build Components/org.swift.protobuf.swiftprotobuf_1.29.0_iphoneos-arm.deb" "Build Components/com.eevee.spotify_6.2.2_iphoneos-arm.deb" -u -w
         echo "patchedspotify=${{ env.componentspath }}/SpotC++.v${{ env.CHANGEVERSION }}_v${{ env.VANILLASPOTIFYVERSION }}.ipa"
         echo "patchedspotify=${{ env.componentspath }}/SpotC++.v${{ env.CHANGEVERSION }}_v${{ env.VANILLASPOTIFYVERSION }}.ipa" >> $GITHUB_ENV
         echo "Patched Spotify .ipa Located: ${{ env.patchedspotify }}"
