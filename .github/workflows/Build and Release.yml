@@ -814,6 +814,9 @@ jobs:
           
     - name: Update AltStore Repo.json
       run: |
+        codesign -d --entitlements :- Build_Components/Payload/Spotify.app \
+          | plutil -convert json -o Build_Components/Entitlements.json -
+
         ENTITLE=$(cat "./Build_Components/Entitlements.json")
         PRIVACYKEYS=$(cat "./Build_Components/NSDescriptions.json")
         jq --arg CHANGEVERSION "${{ env.CHANGEVERSION }}" \
