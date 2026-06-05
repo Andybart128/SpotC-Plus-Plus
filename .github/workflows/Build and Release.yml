@@ -476,9 +476,16 @@ jobs:
         echo "MIN_IOS_VERSION=$MIN_IOS_VERSION" >> $GITHUB_ENV
         echo "Minimum iOS Version: ${{ env.MIN_IOS_VERSION }}"
 
-        (echo "{"; find ./ -name "Info.plist" | while read file; do plutil -p "$file" 2>/dev/null | grep -E "NS.*Description" | sed -E 's/^\s*"([^"]+)".*"(.*)"$/"\1": "\2",/'; done | sed 's/ =>/:/g' | sed 's/\(.*\),/\1/' | tr '\n' ',' | sed 's/,$//' | sed 's/,/,\n/g'; echo "}") > NSDescriptions.json
+        find ./ -name "Info.plist" -exec plutil -convert json -o - {} \; \
+          | jq -s '
+              map(
+                to_entries
+                | map(select(.key | test("^NS.*Description$")))
+              )
+              | add
+              | from_entries
+            ' > NSDescriptions.json
 
-        
         # Clean Up
         
 
