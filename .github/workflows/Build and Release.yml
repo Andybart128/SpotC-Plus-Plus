@@ -462,24 +462,6 @@ jobs:
         echo "VTEXT=${{ steps.vt-openspotify.outputs.analysis }}" >> $GITHUB_ENV
         rm -f "Build_Components/OpenSpotifySafariExtension.zip"
 
-        #- name: Read Spotify information from vanilla .ipa
-        #  run: |
-        #    cp "Build_Components/id324684580" "Build_Components/SpotifyAnylises.zip"
-        #    unzip "Build_Components/SpotifyAnylises.zip" -d "Build_Components/SpotifyAnylises"
-        cd "Build_Components"
-        cp Payload/Spotify.app/Info.plist "Info.plist"
-        echo "VANILLASPOTIFYVERSION=$(/usr/libexec/PlistBuddy -c "Print :SpotifyVersionShort" Info.plist)"
-        echo "VANILLASPOTIFYVERSION=$(/usr/libexec/PlistBuddy -c "Print :SpotifyVersionShort" Info.plist)" >> $GITHUB_ENV
-        echo "Vanilla Spotify Version: $VANILLASPOTIFYVERSION"
-
-        MIN_IOS_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' Info.plist)
-        echo "MIN_IOS_VERSION=$MIN_IOS_VERSION" >> $GITHUB_ENV
-        echo "Minimum iOS Version: ${{ env.MIN_IOS_VERSION }}"
-        
-
-        # Clean Up
-        
-
     - name: Check if components were updated
       run: |
         latest_info=$(curl -s https://raw.githubusercontent.com/SpotCompiled/SpotC-Repo/refs/heads/main/AltStore%20Repo.json | jq '.apps[] | select(.name == "SpotC++") | .information')
