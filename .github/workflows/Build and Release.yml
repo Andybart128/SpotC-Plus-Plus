@@ -906,7 +906,8 @@ jobs:
               }
            ]
            ' AltStoreRepo.json > AltStoreRepo_updated.json
-                   mv AltStoreRepo_updated.json AltStoreRepo.json
+                   
+        mv AltStoreRepo_updated.json AltStoreRepo.json
 
     - name: Clean up Payload
       run: |
