@@ -109,9 +109,14 @@ jobs:
         echo "MIN_IOS_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' Info.plist)" >> $GITHUB_ENV
         
         find ./ -name "Info.plist" -exec plutil -convert json -o - {} \; \
-          | jq -s 'map(to_entries | map(select(.key | test("^NS.*Description$")))) 
-                   | add 
-                   | from_entries' > NSDescriptions.json
+          | jq -s '
+              map(
+                to_entries
+                | map(select(.key | test("^NS.*Description$")))
+              )
+              | add
+              | from_entries
+            ' > NSDescriptions.json
         
         codesign -d --entitlements :- Payload/Spotify.app \
           | plutil -convert json -o Entitlements.json -
