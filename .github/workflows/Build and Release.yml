@@ -472,9 +472,7 @@ jobs:
 
         
         # Clean Up
-        rm -rf Payload
-        rm -f SpotifyAnylises.zip
-        rm -f Info.plist
+        
 
     - name: Check if components were updated
       run: |
@@ -909,6 +907,13 @@ jobs:
            ]
            ' AltStoreRepo.json > AltStoreRepo_updated.json
           mv AltStoreRepo_updated.json AltStoreRepo.json
+
+    
+    - name: Clean up Payload
+      run: |
+        rm -rf Build_Components/Payload
+        rm -f Build_Components/SpotifyAnylises.zip
+        rm -f Build_Components/Info.plist
     
     - name: Upload updated AltStore Repo.json as artifact
       uses: actions/upload-artifact@v4
