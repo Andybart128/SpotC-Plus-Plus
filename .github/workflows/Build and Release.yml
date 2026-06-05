@@ -830,8 +830,8 @@ jobs:
            --arg SPOSIFYFIXVERSION "${{ env.SPOSIFYFIXVERSION }}" \
            --arg ORIONVERSION "${{ env.ORIONVERSION }}" \
            --arg MINVERSION "${{ env.MIN_IOS_VERSION }}" \
-           --argjson PRIVKEYS $PRIVACYKEYS \
-           --argjson ENTITLEMENTS $ENTITLE \
+           --argjson PRIVKEYS "$(cat ./Build_Components/NSDescriptions.json)" \
+           --argjson ENTITLEMENTS "$(cat ./Build_Components/Entitlements.json)" \
            --arg SWIFTPROTOBUFVERSION "${{ env.SWIFTPROTOBUFVERSION }}" \
            '
            (.apps[] | select(.name == "SpotC++") | .version) = $CHANGEVERSION |
