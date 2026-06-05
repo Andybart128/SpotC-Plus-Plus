@@ -475,16 +475,7 @@ jobs:
         MIN_IOS_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' Info.plist)
         echo "MIN_IOS_VERSION=$MIN_IOS_VERSION" >> $GITHUB_ENV
         echo "Minimum iOS Version: ${{ env.MIN_IOS_VERSION }}"
-
-        find ./ -name "Info.plist" -exec plutil -convert json -o - {} \; \
-          | jq -s '
-              map(
-                to_entries
-                | map(select(.key | test("^NS.*Description$")))
-              )
-              | add
-              | from_entries
-            ' > NSDescriptions.json
+        
 
         # Clean Up
         
