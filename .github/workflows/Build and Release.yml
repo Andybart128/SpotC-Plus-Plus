@@ -997,3 +997,8 @@ jobs:
       with:
         name: UpdatedScarletRepo
         path: ScarletRepo.json
+
+    - name: Debug files
+      run: |
+        ls -R Build_Components || echo "no folder"
+        find . -name "*.ipa" || echo "no ipa"
